@@ -225,6 +225,11 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
     [borderView setHidden:YES];
 }
 
+- (BOOL)isEditing
+{
+    return !borderView.hidden;
+}
+
 #pragma mark - Resize
 
 - (void)resizeUsingTouchLocation:(CGPoint)touchPoint {

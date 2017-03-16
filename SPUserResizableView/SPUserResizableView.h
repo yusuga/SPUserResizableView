@@ -108,6 +108,8 @@ typedef struct SPUserResizableViewAnchorPoint {
  */
 - (void)showEditingHandles;
 
+- (BOOL)isEditing;
+
 /**
  *  Is currently resizing?
  *
