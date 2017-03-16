@@ -341,25 +341,24 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
     
     // (5) Ensure the resize won't cause the view to move offscreen.
     if (self.preventsPositionOutsideSuperview) {
-        /*
-         if (newX < self.superview.bounds.origin.x) {
-         // Calculate how much to grow the width by such that the new X coordintae will align with the superview.
-         deltaW = self.frame.origin.x - self.superview.bounds.origin.x;
-         newWidth = self.frame.size.width + deltaW;
-         newX = self.superview.bounds.origin.x;
-         }
-         if (newX + newWidth > self.superview.bounds.origin.x + self.superview.bounds.size.width) {
-         newWidth = self.superview.bounds.size.width - newX;
-         }
-         if (newY < self.superview.bounds.origin.y) {
-         // Calculate how much to grow the height by such that the new Y coordintae will align with the superview.
-         deltaH = self.bounds.origin.y - self.superview.bounds.origin.y;
-         newHeight = self.frame.size.height + deltaH;
-         newY = self.superview.bounds.origin.y;
-         }
-         if (newY + newHeight > self.superview.bounds.origin.y + self.superview.bounds.size.height) {
-         newHeight = self.superview.bounds.size.height - newY;
-         }*/
+        if (newX < self.superview.bounds.origin.x) {
+            // Calculate how much to grow the width by such that the new X coordintae will align with the superview.
+            deltaW = self.frame.origin.x - self.superview.bounds.origin.x;
+            newWidth = self.frame.size.width + deltaW;
+            newX = self.superview.bounds.origin.x;
+        }
+        if (newX + newWidth > self.superview.bounds.origin.x + self.superview.bounds.size.width) {
+            newWidth = self.superview.bounds.size.width - newX;
+        }
+        if (newY < self.superview.bounds.origin.y) {
+            // Calculate how much to grow the height by such that the new Y coordintae will align with the superview.
+            deltaH = self.bounds.origin.y - self.superview.bounds.origin.y;
+            newHeight = self.frame.size.height + deltaH;
+            newY = self.superview.bounds.origin.y;
+        }
+        if (newY + newHeight > self.superview.bounds.origin.y + self.superview.bounds.size.height) {
+            newHeight = self.superview.bounds.size.height - newY;
+        }
     }
     
     // update the frame
@@ -380,27 +379,27 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
 #pragma mark - Helper functions
 
 - (void)translateUsingTouchLocation:(CGPoint)touchPoint {
-    //[self setAnchorPoint:CGPointMake(0.5, 0.5)];
+    [self setAnchorPoint:CGPointMake(0.5, 0.5)];
     
     CGPoint newCenter = CGPointMake(self.center.x + touchPoint.x - touchStart.x, self.center.y + touchPoint.y - touchStart.y);
     
-    if (self.preventsPositionOutsideSuperview) {/*
-                                                 // Ensure the translation won't cause the view to move offscreen.
-                                                 
-                                                 CGFloat midPointX = CGRectGetMidX(self.bounds);
-                                                 if (newCenter.x > self.superview.bounds.size.width - midPointX) {
-                                                 newCenter.x = self.superview.bounds.size.width - midPointX;
-                                                 }
-                                                 if (newCenter.x < midPointX) {
-                                                 newCenter.x = midPointX;
-                                                 }
-                                                 CGFloat midPointY = CGRectGetMidY(self.bounds);
-                                                 if (newCenter.y > self.superview.bounds.size.height - midPointY) {
-                                                 newCenter.y = self.superview.bounds.size.height - midPointY;
-                                                 }
-                                                 if (newCenter.y < midPointY) {
-                                                 newCenter.y = midPointY;
-                                                 }*/
+    if (self.preventsPositionOutsideSuperview) {
+        // Ensure the translation won't cause the view to move offscreen.
+        
+        CGFloat midPointX = CGRectGetMidX(self.bounds);
+        if (newCenter.x > self.superview.bounds.size.width - midPointX) {
+            newCenter.x = self.superview.bounds.size.width - midPointX;
+        }
+        if (newCenter.x < midPointX) {
+            newCenter.x = midPointX;
+        }
+        CGFloat midPointY = CGRectGetMidY(self.bounds);
+        if (newCenter.y > self.superview.bounds.size.height - midPointY) {
+            newCenter.y = self.superview.bounds.size.height - midPointY;
+        }
+        if (newCenter.y < midPointY) {
+            newCenter.y = midPointY;
+        }
     }
     self.center = newCenter;
 }
