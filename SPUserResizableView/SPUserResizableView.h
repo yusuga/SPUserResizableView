@@ -143,7 +143,8 @@ typedef struct SPUserResizableViewAnchorPoint {
  *
  *  @param userResizableView
  */
-- (void)userResizableViewDidEndEditing:(SPUserResizableView *)userResizableView;
+- (void)userResizableViewDidEndEditing:(SPUserResizableView *)userResizableView
+                           isCancelled:(BOOL)isCancelled;
 
 /**
  *  Called when new frame was set.

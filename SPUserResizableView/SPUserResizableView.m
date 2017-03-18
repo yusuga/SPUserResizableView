@@ -526,16 +526,16 @@ typedef struct CGPointSPUserResizableViewAnchorPointPair {
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchesFinished:touches];
+    [self touchesFinished:touches isCancelled:false];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self touchesFinished:touches];
+    [self touchesFinished:touches isCancelled:true];
 }
 
-- (void)touchesFinished:(NSSet *)touches {
-    if ((didMakeChange || ![self disable]) && self.delegate && [self.delegate respondsToSelector:@selector(userResizableViewDidEndEditing:)]) {
-        [self.delegate userResizableViewDidEndEditing:self];
+- (void)touchesFinished:(NSSet *)touches isCancelled:(BOOL)isCancelled {
+    if ((didMakeChange || ![self disable]) && self.delegate && [self.delegate respondsToSelector:@selector(userResizableViewDidEndEditing:isCancelled:)]) {
+        [self.delegate userResizableViewDidEndEditing:self isCancelled: isCancelled];
     }
     
     didMakeChange   = NO;
