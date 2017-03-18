@@ -15,9 +15,12 @@
     self.view.backgroundColor = [UIColor greenColor];
     
     // (1) Create a user resizable view with a simple red background content view.
-    CGRect gripFrame = CGRectMake(50, 50, 200, 150);
+    // CGRect gripFrame = CGRectMake(50, 50, 200, 150);
+    CGRect gripFrame = CGRectMake(20, 60, 200, 200);
     SPUserResizableView *userResizableView = [[SPUserResizableView alloc] initWithFrame:gripFrame];
-    UIView *contentView = [[UIView alloc] initWithFrame:gripFrame];
+    // UIView *contentView = [[UIView alloc] initWithFrame:gripFrame];
+    UIView *contentView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"milky_way.jpg"]];
+    
     [contentView setBackgroundColor:[UIColor redColor]];
     userResizableView.contentView = contentView;
     userResizableView.delegate = self;
@@ -59,6 +62,10 @@
 	
 	[userResizableView addGestureRecognizer:rotationRecognizer];
     [imageResizableView addGestureRecognizer:rotationRecognizer];
+    
+    UISwitch *sw = [[UISwitch alloc] init];
+    [sw addTarget:self action:@selector(isAspectRatioLockEnabledSwitchChanged:) forControlEvents:UIControlEventValueChanged];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:sw];
 }
 
 - (void)userResizableViewDidBeginEditing:(SPUserResizableView *)userResizableView {
@@ -129,6 +136,14 @@
     [[sender view] setTransform:newTransform];
     
     lastRotation = [(UIRotationGestureRecognizer*)sender rotation];
+}
+
+- (void)isAspectRatioLockEnabledSwitchChanged:(UISwitch *)sender {
+    for (SPUserResizableView *subview in self.view.subviews) {
+        if ([subview isKindOfClass:[SPUserResizableView class]]) {
+            subview.isAspectRatioLockEnabled = sender.on;
+        }
+    }
 }
 
 @end

@@ -107,7 +107,9 @@ typedef struct SPUserResizableViewAnchorPoint {
  *  Shows editing handles
  */
 - (void)showEditingHandles;
-
+/**
+ *  Is currently editing?
+ */
 - (BOOL)isEditing;
 
 /**
@@ -116,6 +118,12 @@ typedef struct SPUserResizableViewAnchorPoint {
  *  @return BOOL
  */
 - (BOOL)isResizing;
+
+/**
+ *  If true, while it can still be resized, the crop box will be locked to its current aspect ratio.
+ *  Default is NO.
+ */
+@property (nonatomic) BOOL isAspectRatioLockEnabled;
 
 @end
 

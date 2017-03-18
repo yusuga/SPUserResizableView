@@ -319,8 +319,21 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
     
     
     CGFloat deltaW = anchorPoint.adjustsW * (start.x - end.x) / scaleX;
-    CGFloat deltaX = anchorPoint.adjustsX * (-1.0 * deltaW);
     CGFloat deltaH = anchorPoint.adjustsH * (end.y - start.y) / scaleY;
+    
+    if (self.isAspectRatioLockEnabled) {
+        if (deltaW == 0) {
+            deltaW = deltaH;
+        } else if (deltaH == 0) {
+            deltaH = deltaW;
+        } else if (deltaW < deltaH) {
+            deltaW = deltaH;
+        } else if (deltaH < deltaW) {
+            deltaH = deltaW;
+        }
+    }
+    
+    CGFloat deltaX = anchorPoint.adjustsX * (-1.0 * deltaW);
     CGFloat deltaY = anchorPoint.adjustsY * (-1.0 * deltaH);
     
     // (3) Calculate the new frame.
@@ -341,23 +354,36 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
     
     // (5) Ensure the resize won't cause the view to move offscreen.
     if (self.preventsPositionOutsideSuperview) {
-        if (newX < self.superview.bounds.origin.x) {
-            // Calculate how much to grow the width by such that the new X coordintae will align with the superview.
-            deltaW = self.frame.origin.x - self.superview.bounds.origin.x;
-            newWidth = self.frame.size.width + deltaW;
-            newX = self.superview.bounds.origin.x;
-        }
-        if (newX + newWidth > self.superview.bounds.origin.x + self.superview.bounds.size.width) {
-            newWidth = self.superview.bounds.size.width - newX;
-        }
-        if (newY < self.superview.bounds.origin.y) {
-            // Calculate how much to grow the height by such that the new Y coordintae will align with the superview.
-            deltaH = self.bounds.origin.y - self.superview.bounds.origin.y;
-            newHeight = self.frame.size.height + deltaH;
-            newY = self.superview.bounds.origin.y;
-        }
-        if (newY + newHeight > self.superview.bounds.origin.y + self.superview.bounds.size.height) {
-            newHeight = self.superview.bounds.size.height - newY;
+        if (self.isAspectRatioLockEnabled) {
+            if (newX < self.superview.bounds.origin.x ||
+                newX + newWidth > self.superview.bounds.origin.x + self.superview.bounds.size.width ||
+                newY < self.superview.bounds.origin.y ||
+                newY + newHeight > self.superview.bounds.origin.y + self.superview.bounds.size.height)
+            {
+                newX = self.frame.origin.x;
+                newY = self.frame.origin.y;
+                newWidth = self.bounds.size.width;
+                newHeight = self.bounds.size.height;
+            }
+        } else {
+            if (newX < self.superview.bounds.origin.x) {
+                // Calculate how much to grow the width by such that the new X coordintae will align with the superview.
+                deltaW = self.frame.origin.x - self.superview.bounds.origin.x;
+                newWidth = self.frame.size.width + deltaW;
+                newX = self.superview.bounds.origin.x;
+            }
+            if (newX + newWidth > self.superview.bounds.origin.x + self.superview.bounds.size.width) {
+                newWidth = self.superview.bounds.size.width - newX;
+            }
+            if (newY < self.superview.bounds.origin.y) {
+                // Calculate how much to grow the height by such that the new Y coordintae will align with the superview.
+                deltaH = self.bounds.origin.y - self.superview.bounds.origin.y;
+                newHeight = self.frame.size.height + deltaH;
+                newY = self.superview.bounds.origin.y;
+            }
+            if (newY + newHeight > self.superview.bounds.origin.y + self.superview.bounds.size.height) {
+                newHeight = self.superview.bounds.size.height - newY;
+            }
         }
     }
     
