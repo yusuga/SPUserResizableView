@@ -16,7 +16,8 @@
     
     // (1) Create a user resizable view with a simple red background content view.
     // CGRect gripFrame = CGRectMake(50, 50, 200, 150);
-    CGRect gripFrame = CGRectMake(20, 60, 200, 200);
+    //CGRect gripFrame = CGRectMake(20, 60, 200, 200);
+    CGRect gripFrame = CGRectMake(0, 44, 300, 200);
     SPUserResizableView *userResizableView = [[SPUserResizableView alloc] initWithFrame:gripFrame];
     // UIView *contentView = [[UIView alloc] initWithFrame:gripFrame];
     UIView *contentView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"milky_way.jpg"]];

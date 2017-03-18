@@ -322,14 +322,12 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
     CGFloat deltaH = anchorPoint.adjustsH * (end.y - start.y) / scaleY;
     
     if (self.isAspectRatioLockEnabled) {
-        if (deltaW == 0) {
-            deltaW = deltaH;
-        } else if (deltaH == 0) {
-            deltaH = deltaW;
-        } else if (deltaW < deltaH) {
-            deltaW = deltaH;
-        } else if (deltaH < deltaW) {
-            deltaH = deltaW;
+        if (deltaH != 0 && (deltaW == 0 || deltaW < deltaH)) {
+            CGFloat scale = self.bounds.size.width / self.bounds.size.height;
+            deltaW = deltaH * scale;
+        } else if (deltaW != 0 && (deltaH == 0 || deltaH < deltaW)) {
+            CGFloat scale = self.bounds.size.height / self.bounds.size.width;
+            deltaH = deltaW * scale;
         }
     }
     
