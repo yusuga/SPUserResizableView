@@ -68,7 +68,7 @@ typedef struct SPUserResizableViewAnchorPoint {
 @property (nonatomic) CGFloat minHeight;
 
 /**
- *  Disables resize of the view
+ *  Disables resize and move of the view
  *  @default NO
  */
 @property (nonatomic) BOOL disable;
@@ -124,6 +124,12 @@ typedef struct SPUserResizableViewAnchorPoint {
  *  Default is NO.
  */
 @property (nonatomic) BOOL isAspectRatioLockEnabled;
+
+/**
+ *  Disables resize of the view
+ *  Default is NO.
+ */
+@property (nonatomic) BOOL isResizeDisabled;
 
 @end
 

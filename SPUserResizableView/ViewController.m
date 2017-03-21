@@ -19,8 +19,9 @@
     //CGRect gripFrame = CGRectMake(20, 60, 200, 200);
     CGRect gripFrame = CGRectMake(0, 44, 300, 200);
     SPUserResizableView *userResizableView = [[SPUserResizableView alloc] initWithFrame:gripFrame];
-    // UIView *contentView = [[UIView alloc] initWithFrame:gripFrame];
-    UIView *contentView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"milky_way.jpg"]];
+    userResizableView.isResizeDisabled = YES;
+    UIView *contentView = [[UIView alloc] initWithFrame:gripFrame];
+    //UIView *contentView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"milky_way.jpg"]];
     
     [contentView setBackgroundColor:[UIColor redColor]];
     userResizableView.contentView = contentView;
